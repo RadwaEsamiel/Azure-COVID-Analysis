@@ -1,0 +1,24 @@
+{
+	"name": "population_fullpipline_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "population_full_pipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/populationdata/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/b6a7d777-a2b8-436d-9bc0-11cc996e52e4/resourceGroups/covid-solution/providers/Microsoft.Storage/storageAccounts/sablobcovidreport",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

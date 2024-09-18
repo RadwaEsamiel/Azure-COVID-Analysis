@@ -1,0 +1,64 @@
+{
+	"name": "weeklydata_SqlTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_db_SqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql_datasets"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "country",
+				"type": "varchar"
+			},
+			{
+				"name": "country_code_2_digit",
+				"type": "varchar"
+			},
+			{
+				"name": "country_code_3_digit",
+				"type": "varchar"
+			},
+			{
+				"name": "year_week",
+				"type": "varchar"
+			},
+			{
+				"name": "week_start_date",
+				"type": "date"
+			},
+			{
+				"name": "week_end_date",
+				"type": "date"
+			},
+			{
+				"name": "hospital_occupancy",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "icu_occupancy",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "population",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "data_source",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "covid_reporting",
+			"table": "hospital_admissions_weekly"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

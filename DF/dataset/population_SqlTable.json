@@ -1,0 +1,56 @@
+{
+	"name": "population_SqlTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_db_SqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql_datasets"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "country",
+				"type": "varchar"
+			},
+			{
+				"name": "country_code_2_digit",
+				"type": "varchar"
+			},
+			{
+				"name": "country_code_3_digit",
+				"type": "varchar"
+			},
+			{
+				"name": "population",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "cases_count",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "deaths_count",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "reported_date",
+				"type": "date"
+			},
+			{
+				"name": "source",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "covid_reporting",
+			"table": "population_by_age"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

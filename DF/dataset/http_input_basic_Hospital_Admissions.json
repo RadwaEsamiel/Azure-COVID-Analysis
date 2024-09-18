@@ -1,0 +1,26 @@
+{
+	"name": "http_input_basic_Hospital_Admissions",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Http_basic",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HTTP_Ingestion"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "cloudboxacademy/covid19/raw/main/ecdc_data/hospital_admissions.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

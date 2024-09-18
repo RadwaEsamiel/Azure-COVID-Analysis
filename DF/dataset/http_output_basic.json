@@ -1,0 +1,28 @@
+{
+	"name": "http_output_basic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_covidreport_DataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HTTP_Ingestion"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "cases_deaths.csv",
+				"folderPath": "http_basic_ingestion",
+				"fileSystem": "httpouputdata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

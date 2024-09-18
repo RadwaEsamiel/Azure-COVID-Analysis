@@ -1,0 +1,122 @@
+{
+	"name": "cases_and_deaths_dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "http_output_basic",
+						"type": "DatasetReference"
+					},
+					"name": "casesanddeaths"
+				},
+				{
+					"dataset": {
+						"referenceName": "country_codes_lookup",
+						"type": "DatasetReference"
+					},
+					"name": "countrycodeslookup"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "cases_and_deaths",
+						"type": "DatasetReference"
+					},
+					"name": "casesanddeathsink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filterEuropeonly",
+					"description": "Filtering rows using expressions on columns 'continent' when equal Europe and not null country_code"
+				},
+				{
+					"name": "selectrequestedcolumnsonly",
+					"description": "selecting and renaming columns columns 'country, country_code_3_digit, population, indicator, daily_count, reported_date, source'"
+				},
+				{
+					"name": "casesanddeathspivot"
+				},
+				{
+					"name": "countrycodeswithcasesanddeath"
+				},
+				{
+					"name": "finaloutput"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          country as string,",
+				"          country_code as string,",
+				"          continent as string,",
+				"          population as integer,",
+				"          indicator as string,",
+				"          daily_count as short,",
+				"          date as date,",
+				"          rate_14_day as double,",
+				"          source as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> casesanddeaths",
+				"source(output(",
+				"          country as string,",
+				"          country_code_2_digit as string,",
+				"          country_code_3_digit as string,",
+				"          continent as string,",
+				"          population as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> countrycodeslookup",
+				"casesanddeaths filter(continent == 'Europe' && not(isNull(country_code))) ~> filterEuropeonly",
+				"filterEuropeonly select(mapColumn(",
+				"          country,",
+				"          country_code_3_digit = country_code,",
+				"          population,",
+				"          indicator,",
+				"          daily_count,",
+				"          reported_date = date,",
+				"          source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectrequestedcolumnsonly",
+				"selectrequestedcolumnsonly pivot(groupBy(country,",
+				"          country_code_3_digit,",
+				"          source,",
+				"          reported_date,",
+				"          population),",
+				"     pivotBy(indicator, ['confirmed cases', 'deaths']),",
+				"     count = sum(daily_count),",
+				"     columnNaming: '$V_$N',",
+				"     lateral: true) ~> casesanddeathspivot",
+				"casesanddeathspivot, countrycodeslookup lookup(casesanddeathspivot@country == countrycodeslookup@country,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> countrycodeswithcasesanddeath",
+				"countrycodeswithcasesanddeath select(mapColumn(",
+				"          country = casesanddeathspivot@country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit = casesanddeathspivot@country_code_3_digit,",
+				"          population = casesanddeathspivot@population,",
+				"          cases_count = {confirmed cases_count},",
+				"          deaths_count,",
+				"          reported_date,",
+				"          source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> finaloutput",
+				"finaloutput sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> casesanddeathsink"
+			]
+		}
+	}
+}

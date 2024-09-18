@@ -1,0 +1,33 @@
+{
+	"name": "http_links_Json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_covidreport_BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "jason"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "ecdc_file_list.json",
+				"container": "httpjason"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"sourceRelativeURL": {
+					"type": "string"
+				},
+				"sinkFileName": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

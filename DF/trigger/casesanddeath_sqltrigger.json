@@ -1,0 +1,34 @@
+{
+	"name": "casesanddeath_sqltrigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipeline": {
+			"pipelineReference": {
+				"referenceName": "cases_deaths_sqlized_pipeline",
+				"type": "PipelineReference"
+			}
+		},
+		"type": "TumblingWindowTrigger",
+		"typeProperties": {
+			"frequency": "Hour",
+			"interval": 24,
+			"startTime": "2024-09-17T20:35:00Z",
+			"delay": "00:00:00",
+			"maxConcurrency": 50,
+			"retryPolicy": {
+				"intervalInSeconds": 30
+			},
+			"dependsOn": [
+				{
+					"type": "TumblingWindowTriggerDependencyReference",
+					"offset": "-0.00:16:00",
+					"referenceTrigger": {
+						"referenceName": "transformation_trigger",
+						"type": "TriggerReference"
+					}
+				}
+			]
+		}
+	}
+}

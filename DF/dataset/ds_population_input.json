@@ -1,0 +1,29 @@
+{
+	"name": "ds_population_input",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_covidreport_BlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "population-blob-ingestion"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "population_by_age.tsv.gz",
+				"container": "populationdata"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Optimal",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

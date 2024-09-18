@@ -1,0 +1,34 @@
+{
+	"name": "weeklysql_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipeline": {
+			"pipelineReference": {
+				"referenceName": "hostpial_addmisions_daily_sqlized_pipeline",
+				"type": "PipelineReference"
+			}
+		},
+		"type": "TumblingWindowTrigger",
+		"typeProperties": {
+			"frequency": "Hour",
+			"interval": 24,
+			"startTime": "2024-09-17T20:33:00Z",
+			"delay": "00:00:00",
+			"maxConcurrency": 50,
+			"retryPolicy": {
+				"intervalInSeconds": 30
+			},
+			"dependsOn": [
+				{
+					"type": "TumblingWindowTriggerDependencyReference",
+					"offset": "-0.00:03:00",
+					"referenceTrigger": {
+						"referenceName": "hospitaltransformation_trigger",
+						"type": "TriggerReference"
+					}
+				}
+			]
+		}
+	}
+}

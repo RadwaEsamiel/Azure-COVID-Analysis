@@ -1,0 +1,33 @@
+{
+	"name": "databricks_covidreportpipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "excute transformation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/radwaesmaiel13@gmail.com/covidreport/transform_population_data"
+				},
+				"linkedServiceName": {
+					"referenceName": "covidreportDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Databricks"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-09-17T19:57:56Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,43 @@
+{
+	"name": "ds_http_input_parameterized",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Http_ingestion",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"base_url_parameter": {
+					"value": "@dataset().baseurl_parameter",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"baseurl_parameter": {
+				"type": "string"
+			},
+			"relativeurl_parameter": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "HTTP_Ingestion"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().relativeurl_parameter",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

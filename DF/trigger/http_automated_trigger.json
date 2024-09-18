@@ -1,0 +1,24 @@
+{
+	"name": "http_automated_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "http_parameterized_pipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 10,
+				"startTime": "2024-09-16T12:40:00",
+				"timeZone": "Egypt Standard Time"
+			}
+		}
+	}
+}
